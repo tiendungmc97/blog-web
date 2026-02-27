@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}🔍 Running pre-commit checks...${NC}"
+
+# Run lint-staged first
+echo -e "${BLUE}📝 Checking code formatting and linting...${NC}"
+npx lint-staged
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Code formatting/linting failed. Please fix the issues above.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ Code formatting and linting passed!${NC}"
+
+# Check if we're in the middle of a commit (commit message will be validated by commit-msg hook)
+if [ -f .git/COMMIT_EDITMSG ]; then
+    echo -e "${BLUE}📋 Commit message will be validated...${NC}"
+fi
+
+echo -e "${GREEN}✅ Pre-commit checks completed successfully!${NC}"
+echo -e "${YELLOW}💡 Remember to use conventional commit format:${NC}"
+echo -e "${YELLOW}   - feat: add new feature${NC}"
+echo -e "${YELLOW}   - fix: resolve bug${NC}"
+echo -e "${YELLOW}   - docs: update documentation${NC}"
+echo -e "${YELLOW}   - Or run: ${BLUE}npm run commit${YELLOW} for interactive mode${NC}"

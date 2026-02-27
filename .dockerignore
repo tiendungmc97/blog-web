@@ -1,0 +1,91 @@
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js build output
+.next
+out
+dist
+build
+
+# Environment files (keep .env.example if exists)
+!.env.example
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and coverage
+logs
+*.log
+coverage
+.coverage
+.nyc_output
+
+# Cache directories
+.npm
+.eslintcache
+.parcel-cache
+.cache
+
+# Testing
+__tests__
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Development configuration files
+.prettierrc*
+.eslintrc*
+commitlint.config.js
+.commitlintrc*
+
+# Husky hooks
+.husky/
+
+# Documentation
+README.md
+docs/
+*.md
+
+# Deployment files
+deploy.sh
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional dependencies
+.pnp
+.pnp.js
+
+# Yarn
+.yarn/
+.yarnrc.yml
+
+# Package manager locks (keep one based on your preference)
+# Uncomment the one you DON'T use:
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
