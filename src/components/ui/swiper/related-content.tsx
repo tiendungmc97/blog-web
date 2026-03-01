@@ -10,7 +10,6 @@ import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { STRAPI_URL } from "@/constants/domain";
 
 interface RelatedContentProps {
   items: NewsSummary[];
@@ -79,12 +78,12 @@ export function RelatedContent({ items }: RelatedContentProps) {
             <SwiperSlide key={item.id}>
               <Link
                 href={`/news/${item.slug}`}
-                className="group flex flex-col overflow-hidden rounded-xs border bg-white shadow-sm transition hover:shadow-md"
+                className="group flex flex-col overflow-hidden bg-white shadow-sm transition hover:shadow-md"
               >
                 <div className="relative h-44 w-full bg-neutral-100 dark:bg-neutral-800">
                   {item.cover?.url ? (
                     <Image
-                      src={item.cover?.url ? `${STRAPI_URL}${item.cover.url}` : "/placeholder.png"}
+                      src={item.cover?.url ?? "/placeholder.png"}
                       alt={item.titles ?? ""}
                       fill
                       className="object-cover transition duration-300 group-hover:scale-105"

@@ -13,14 +13,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <nav className="hidden items-center gap-4 md:flex">
             <Link
               href="/news"
-              className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white"
+              className="text-lg font-bold tracking-tight text-black! text-neutral-900 dark:text-white"
             >
               {t("news")}
             </Link>
 
             <Link
               href="/photos"
-              className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white"
+              className="text-lg font-bold tracking-tight text-black! text-neutral-900 dark:text-white"
             >
               {t("photos")}
             </Link>

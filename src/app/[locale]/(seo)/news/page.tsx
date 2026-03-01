@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import { getNews } from "@/service/cms-strapi/news";
 import { New } from "@/service/cms-strapi/news/interface";
-import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 import { useLocale, useTranslations } from "next-intl";
-import { STRAPI_URL } from "@/constants/domain";
+import { getTranslations } from "next-intl/server";
+import Image from "next/image";
+import Link from "next/link";
 
 export function generateMetadata(): Metadata {
   return {
@@ -60,6 +59,7 @@ function CardNews({ news }: { news: New }) {
     day: "numeric",
     year: "numeric",
   });
+  console.log("News cover URL:", news.cover?.url);
   return (
     <Link
       href={`/news/${news.slug}`}
@@ -68,7 +68,7 @@ function CardNews({ news }: { news: New }) {
       <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
         {news.cover?.url ? (
           <Image
-            src={`${STRAPI_URL}${news.cover.url}`}
+            src={news.cover.url}
             alt={news.cover.alternativeText ?? news.titles ?? news.slug}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"

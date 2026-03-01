@@ -1,4 +1,3 @@
-import { STRAPI_URL } from "@/constants/domain";
 import { Link } from "@/libs/i18n/navigation";
 import { Photo } from "@/service/cms-strapi/photos/interface";
 import { useTranslations } from "next-intl";
@@ -14,7 +13,7 @@ export function CardPhoto({ photo }: { photo: Photo }) {
       <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
         {photo.coverImage?.url ? (
           <Image
-            src={`${STRAPI_URL}${photo.coverImage.url}`}
+            src={photo.coverImage.url}
             alt={photo.coverImage.alternativeText ?? photo.slug}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"

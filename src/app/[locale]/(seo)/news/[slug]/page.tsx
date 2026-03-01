@@ -1,6 +1,5 @@
 import { UserCard } from "@/components/ui/card/user-card";
 import { RelatedContent } from "@/components/ui/swiper/related-content";
-import { STRAPI_URL } from "@/constants/domain";
 import { getNewsBySlug } from "@/service/cms-strapi/news";
 import { Metadata } from "next";
 import { draftMode } from "next/headers";
@@ -19,7 +18,7 @@ export async function generateMetadata({
 
   const title = article?.titles ?? "News - My Website";
   const description = article?.descriptions ?? "Latest news and updates from My Website.";
-  const coverUrl = article?.cover?.url ? `${STRAPI_URL}${article.cover.url}` : "/images/og-news.png";
+  const coverUrl = article?.cover?.url ?? "/images/og-news.png";
   const coverWidth = article?.cover?.width ?? 1200;
   const coverHeight = article?.cover?.height ?? 630;
 
@@ -63,8 +62,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
     );
   }
 
-  const coverUrl = news.cover?.url ? `${STRAPI_URL}${news.cover.url}` : null;
-
+  const coverUrl = news.cover?.url ?? "/images/og-news.png";
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-4 text-3xl font-bold">{news.titles}</h1>
@@ -81,20 +79,20 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
       </p>
       <UserCard
         name={news.author?.name ?? "Unknown Author"}
-        avatarUrl={news.author?.avatar?.url ? `${STRAPI_URL}${news.author.avatar.url}` : undefined}
+        avatarUrl={news.author?.avatar?.url ?? ""}
         avatarAlt={news.author?.name ?? ""}
         role={news.author?.email ?? ""}
-        facebookUrl="fb"
-        gmailUrl="gmail"
-        twitterUrl="twitter"
+        facebookUrl="#"
+        gmailUrl="#"
+        twitterUrl="#"
       />
       {coverUrl && (
         <Image
           src={coverUrl}
           alt={news.cover?.alternativeText ?? news.titles ?? ""}
           className="mb-6 w-full rounded-lg object-cover"
-          width={news.cover?.width}
-          height={news.cover?.height}
+          width={news.cover?.width ?? 400}
+          height={news.cover?.height ?? 300}
         />
       )}
       {news.contents?.map((content: { id: number; body: string }) => (

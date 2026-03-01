@@ -136,6 +136,7 @@ export function UserCard({
             <LinkSocialIcon
               url={twitterUrl}
               size="small"
+              label="Twitter"
             >
               <TwitterIcon />
             </LinkSocialIcon>
@@ -145,17 +146,26 @@ export function UserCard({
 
       <div className="flex hidden items-center gap-2 lg:flex">
         {twitterUrl && (
-          <LinkSocialIcon url={twitterUrl}>
+          <LinkSocialIcon
+            url={twitterUrl}
+            label="Twitter"
+          >
             <TwitterIcon />
           </LinkSocialIcon>
         )}
         {facebookUrl && (
-          <LinkSocialIcon url={facebookUrl}>
+          <LinkSocialIcon
+            url={facebookUrl}
+            label="Facebook"
+          >
             <FacebookIcon />
           </LinkSocialIcon>
         )}
         {gmailUrl && (
-          <LinkSocialIcon url={gmailUrl}>
+          <LinkSocialIcon
+            url={gmailUrl}
+            label="Gmail"
+          >
             <GmailIcon />
           </LinkSocialIcon>
         )}
@@ -176,10 +186,12 @@ function LinkSocialIcon({
   url,
   children,
   size = "medium",
+  label,
 }: {
   url: string;
   children: React.ReactNode;
   size?: "small" | "medium" | "large";
+  label: string;
 }) {
   const sizeClasses = {
     small: "h-6 w-6",
@@ -188,15 +200,15 @@ function LinkSocialIcon({
   };
 
   return (
-    <button className={`rounded-full border ${sizeClasses[size]}`}>
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex h-full w-full items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition hover:bg-black hover:text-white"
-      >
-        {children}
-      </a>
-    </button>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      title={label}
+      className={`flex ${sizeClasses[size]} items-center justify-center rounded-full border bg-neutral-100 text-neutral-600 transition hover:bg-black hover:text-white`}
+    >
+      {children}
+    </a>
   );
 }
