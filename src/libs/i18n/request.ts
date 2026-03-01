@@ -9,7 +9,7 @@ async function detectLocaleFromBrowser(): Promise<Language> {
   const acceptLanguage = headersList.get("accept-language") ?? "";
 
   // Use the first (highest priority) language from Accept-Language header
-  const firstLang = (acceptLanguage.split(",")?.[0] ?? "").trim().split(";")[0].split("-")[0].toLowerCase();
+  const firstLang = ((acceptLanguage.split(",")?.[0] ?? "").trim().split(";")[0] ?? "").split("-")[0]?.toLowerCase();
   const detected = hasLocale(routing.locales, firstLang) ? firstLang : routing.defaultLocale;
 
   return detected as Language;

@@ -29,8 +29,8 @@ export function generateMetadata(): Metadata {
   };
 }
 
-export default async function NewsPage({ params }: { params: { locale: string } }) {
-  const { locale } = params;
+export default async function NewsPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   const newsData = await getNews(locale);
   return (
     <div className="container mx-auto px-4 py-8">

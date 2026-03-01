@@ -1,11 +1,4 @@
 import { QueryClient } from "@tanstack/react-query";
-import { CustomApiError } from "../axios/types";
-declare module "@tanstack/react-query" {
-  interface Register {
-    // Use unknown so call sites must narrow explicitly.
-    defaultError: CustomApiError;
-  }
-}
 export function createQueryClient() {
   return new QueryClient({
     defaultOptions: {

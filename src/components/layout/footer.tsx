@@ -1,7 +1,6 @@
 "use client";
 
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { CurrentTime } from "../ui/display/date-components";
 
 export default function AppFooter({ onHelpClick = () => {} }) {
   return (
@@ -22,10 +21,6 @@ export default function AppFooter({ onHelpClick = () => {} }) {
           >
             <QuestionCircleOutlined className="text-[16px]" />
           </button>
-          <CurrentTime
-            format="HH:mm:ss DD/MM/YYYY"
-            className="text-[12px]"
-          />
         </div>
       </div>
     </footer>

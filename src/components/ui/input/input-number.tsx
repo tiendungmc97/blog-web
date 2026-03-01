@@ -2,9 +2,9 @@ import { Form, FormItemProps, InputNumber, InputNumberProps } from "antd";
 import { forwardRef, memo, ReactNode } from "react";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 
-import { Language } from "@/types/language";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { NumericFormat, NumericFormatProps, OnValueChange } from "react-number-format";
+import { Language } from "@/libs/i18n/types";
 interface IInputNumberFieldProps<TFormValues extends FieldValues> extends Omit<InputNumberProps, "name"> {
   name: Path<TFormValues>;
   label: ReactNode;

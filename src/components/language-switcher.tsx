@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "@/libs/i18n/navigation";
 import { Language } from "@/libs/i18n/types";
 import { Dropdown, Image, MenuProps } from "antd";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 export function LanguageSwitcher() {
   const locale = useLocale();

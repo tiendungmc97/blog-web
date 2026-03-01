@@ -2,13 +2,6 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "News", href: "/news" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   const t = useTranslations();
   return (

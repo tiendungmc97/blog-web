@@ -1,13 +1,11 @@
 "use client";
 
-import { Language } from "@/types/language";
-import { Currency } from "@/types/settings";
+import { Language } from "@/libs/i18n/types";
 import React from "react";
 import { NumericFormat } from "react-number-format";
 
 export interface PriceDisplayProps {
   value: number | string | null | undefined;
-  currency?: Currency;
   className?: string;
   prefix?: string;
   suffix?: string;
@@ -29,7 +27,6 @@ export interface AmountDisplayProps {
 
 export const PriceDisplay: React.FC<PriceDisplayProps> = ({
   value,
-  currency = Currency.VND,
   className = "",
   invalidText = "-",
   prefix = "",
@@ -39,7 +36,7 @@ export const PriceDisplay: React.FC<PriceDisplayProps> = ({
   mask = "******",
 }) => {
   const locale = Language.VI;
-  const finalDecimalScale = decimalScale !== undefined ? decimalScale : currency === Currency.VND ? 0 : 2;
+  const finalDecimalScale = decimalScale !== undefined ? decimalScale : 2;
 
   if (value === null || value === undefined || isNaN(Number(value))) {
     return <span className={className}> {invalidText} </span>;
