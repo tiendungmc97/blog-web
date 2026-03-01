@@ -1,12 +1,5 @@
 interface Meta {
-  code: ApiStatusCode;
-  message: string;
-}
-export interface PaginatedData<T> {
-  totalRecords: number;
-  pageNo: number;
-  pageSize: number;
-  data: T[];
+  pagination?: Pagination;
 }
 export interface ApiPagedParams {
   pageNo?: number;
@@ -17,16 +10,11 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-export interface ApiPagedResponse<T> {
-  meta: Meta[];
-  data: PaginatedData<T>;
-}
-
-export interface CustomApiError {
-  messages: string[];
-  status: number;
-  data?: any;
-  codes: ApiStatusCode[];
+export interface Pagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
 }
 
 export enum ApiStatusCode {
@@ -44,8 +32,6 @@ export enum ApiStatusCode {
   BAD_GATEWAY = 502,
   SERVICE_UNAVAILABLE = 503,
   GATEWAY_TIMEOUT = 504,
-
-
 }
 
 export const ApiStatusMessages: Record<ApiStatusCode, string> = {
@@ -62,6 +48,4 @@ export const ApiStatusMessages: Record<ApiStatusCode, string> = {
   [ApiStatusCode.BAD_GATEWAY]: "Bad gateway",
   [ApiStatusCode.SERVICE_UNAVAILABLE]: "Service unavailable",
   [ApiStatusCode.GATEWAY_TIMEOUT]: "Gateway timeout",
-
-
 };

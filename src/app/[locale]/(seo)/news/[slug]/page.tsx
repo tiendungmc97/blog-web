@@ -1,0 +1,119 @@
+import { UserCard } from "@/components/ui/card/user-card";
+import { RelatedContent } from "@/components/ui/swiper/related-content";
+import { getNewsBySlug } from "@/service/cms-strapi/news";
+import { NewsSummary } from "@/service/cms-strapi/news/interface";
+import { Metadata } from "next";
+import Image from "next/image";
+import ReactMarkdown from "react-markdown";
+const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: string }>;
+}): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const res = await getNewsBySlug(slug, locale);
+  const article = res.data?.length > 0 ? res.data[0] : null;
+
+  const title = article?.titles ?? "News - My Website";
+  const description = article?.descriptions ?? "Latest news and updates from My Website.";
+  const coverUrl = article?.cover?.url ? `${STRAPI_URL}${article.cover.url}` : "/images/og-news.png";
+  const coverWidth = article?.cover?.width ?? 1200;
+  const coverHeight = article?.cover?.height ?? 630;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url: `/news/${slug}`,
+      images: [
+        {
+          url: coverUrl,
+          width: coverWidth,
+          height: coverHeight,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [coverUrl],
+    },
+  };
+}
+
+export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
+  const { slug, locale } = await params;
+  const res = await getNewsBySlug(slug, locale);
+  const news = res.data?.length > 0 ? res.data[0] : null;
+
+  if (!news) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p className="text-gray-500">News not found.</p>
+      </div>
+    );
+  }
+
+  const coverUrl = news.cover?.url ? `${STRAPI_URL}${news.cover.url}` : null;
+
+  const relativedContents: NewsSummary[] =
+    Array(6)
+      .fill(news.relative_news3 ?? [])
+      .flat()
+      .map((item, index) => ({
+        ...item,
+        id: item.id * 1000 + index,
+        cover: null,
+      })) || [];
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="mb-4 text-3xl font-bold">{news.titles}</h1>
+      <p className="mb-6 text-sm text-gray-500">
+        Published:{" "}
+        {new Date(news.publishedAt).toLocaleString(locale, {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        })}
+      </p>
+      <UserCard
+        name="Kevin Patra"
+        avatarUrl=""
+        avatarAlt="Author Avatar"
+        role="Senior News Write"
+        facebookUrl="fb"
+        gmailUrl="gmail"
+        twitterUrl="twitter"
+      />
+      {coverUrl && (
+        <Image
+          src={coverUrl}
+          alt={news.cover?.alternativeText ?? news.titles ?? ""}
+          className="mb-6 w-full rounded-lg object-cover"
+          width={news.cover?.width}
+          height={news.cover?.height}
+        />
+      )}
+      {news.contents?.map((content: { id: number; body: string }) => (
+        <div
+          key={content.id}
+          className="prose mb-4 max-w-none"
+        >
+          <ReactMarkdown>{content.body}</ReactMarkdown>
+        </div>
+      ))}
+      <RelatedContent items={relativedContents} />
+    </div>
+  );
+}

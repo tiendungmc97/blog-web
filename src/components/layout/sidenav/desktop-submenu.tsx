@@ -1,6 +1,5 @@
 "use client";
 
-import { designTokens } from "@/utils/design-tokens";
 import React from "react";
 
 export type MenuItem = {
@@ -41,18 +40,6 @@ function SubItemRow({
         disabled ? "cursor-not-allowed" : "cursor-pointer",
         active ? "text-textBase bg-white" : `bg-white ${disabled ? "text-border" : "text-textSecondary"}`,
       ].join(" ")}
-      onMouseEnter={(e) => {
-        if (!disabled && !active) {
-          e.currentTarget.style.backgroundColor = designTokens.colors.bgBase;
-          e.currentTarget.style.color = designTokens.colors.textBase;
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!disabled && !active) {
-          e.currentTarget.style.backgroundColor = "transparent";
-          e.currentTarget.style.color = designTokens.colors.textSecondary;
-        }
-      }}
     >
       <span
         className={`inline-flex h-6 w-6 items-center justify-center ${active ? "text-primary" : "text-textSecondary"}`}

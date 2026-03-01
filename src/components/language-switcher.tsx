@@ -1,46 +1,22 @@
 "use client";
 
 import { usePathname, useRouter } from "@/libs/i18n/navigation";
-import { useMutationUpdateUserSettings, useQueryUserProfile } from "@/services/users/hooks";
-import { TypeLangApi } from "@/services/users/types";
-import { Language } from "@/types/language";
+import { Language } from "@/libs/i18n/types";
 import { Dropdown, Image, MenuProps } from "antd";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect } from "react";
 
-export function LanguageSwitcher({ shouldFetchUserSettings = false }: { shouldFetchUserSettings?: boolean }) {
-  const t = useTranslations("LanguageSwitcher");
+export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  const { data: userInfo } = useQueryUserProfile(shouldFetchUserSettings);
-  const { mutate: updateUserSettings } = useMutationUpdateUserSettings();
-
-  useEffect(() => {
-    if (userInfo?.data?.lang) {
-      const langMap: Record<TypeLangApi, Language> = {
-        en_US: Language.EN,
-        vi_VN: Language.VI,
-      };
-      const userLang = langMap[userInfo.data.lang];
-      router.replace(pathname, { locale: userLang });
-    }
-  }, [userInfo?.data?.lang]);
-
   const languages: { code: Language; name: string; flag: string }[] = [
-    { code: Language.EN, name: t("english"), flag: "/flags/en.svg" },
-    { code: Language.VI, name: t("vietnamese"), flag: "/flags/vi.svg" },
+    { code: Language.EN, name: "English", flag: "/flags/en.svg" },
+    { code: Language.VI, name: "Vietnamese", flag: "/flags/vi.svg" },
   ];
 
   const handleLanguageChange = (language: Language) => {
     router.replace(pathname, { locale: language });
-    const langMap: Record<Language, TypeLangApi> = {
-      [Language.EN]: "en_US",
-      [Language.VI]: "vi_VN",
-    };
-    if (shouldFetchUserSettings) return;
-    updateUserSettings({ lang: langMap[language] });
   };
 
   const items: MenuProps["items"] = languages.map((e) => ({

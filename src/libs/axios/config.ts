@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { ApiStatusCode } from "./types";
 // Base API configuration
 const API_CONFIG = {
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -14,7 +13,7 @@ export const apiClient: AxiosInstance = axios.create(API_CONFIG);
 // Request interceptor for adding auth tokens, logging, etc.
 apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const accessToken = "your_access_token_here"; // Replace with actual token retrieval logic
+    const accessToken = null; // TODO: replace with real token retrieval (e.g. from cookies)
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -42,54 +41,12 @@ apiClient.interceptors.response.use(
         data: response.data,
       });
     }
-
-    return response;
+    return response.data;
   },
   async (error: AxiosError) => {
-    if (error?.response?.status === ApiStatusCode.UNAUTHORIZED) {
-      window.location.href = "/login";
-    }
-    const apiError = await formatApiError(error);
-    // Log error in development
-    if (process.env.NEXT_PUBLIC_APP_ENV === "development") {
-      console.log(`❌ API Error: ${error.config?.method?.toUpperCase()} ${error.config?.url}`, {
-        ...apiError,
-      });
-    }
-    return Promise.reject(apiError);
+    return Promise.reject(error);
   },
 );
-
-async function formatApiError(error: AxiosError) {
-  const status = error.response?.status || 400;
-  const data = error.response?.data as any;
-  let messages: string[] = [];
-  let codes: ApiStatusCode[] = [];
-
-  const url = typeof window !== "undefined" ? window.location.pathname : "";
-  const languageMatch = url.match(/\/([a-z]{2})(?:\/|$)/i);
-  const language = languageMatch ? languageMatch[1] : "en";
-  const messagesTranslate = await import(`../../../messages/${language}.json`);
-
-  if (data?.meta?.length) {
-    messages = data.meta.map((item: any) => {
-      return messagesTranslate?.ApiErrors[item.code as ApiStatusCode] ?? item.code;
-    });
-    codes = data.meta.map((item: any) => item.code);
-  }
-
-  if (data?.meta?.code) {
-    messages.push(messagesTranslate?.ApiErrors[data.meta.code as ApiStatusCode] ?? data.meta.code);
-    codes.push(data.meta.code);
-  }
-
-  return {
-    messages: messages,
-    codes,
-    status,
-    data,
-  };
-}
 
 // Create specialized API clients for different services
 export const createServiceClient = (baseURL?: string, config?: AxiosRequestConfig): AxiosInstance => {

@@ -8,7 +8,6 @@ import { ReactQueryProvider } from "@/libs/react-query/provider";
 import { ThemeProviders } from "@/libs/theme/provider";
 import { Theme } from "@/libs/theme/types";
 import "@/styles/globals.css";
-import { Language } from "@/types/language";
 import { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -16,6 +15,7 @@ import { cookies } from "next/headers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SessionStorageKeys } from "@/constants/keys";
+import { Language } from "@/libs/i18n/types";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,25 +66,25 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <ReactQueryProvider>
-            <NextIntlClientProvider messages={messages}>
-              <ThemeProviders theme={theme}>
-                <main className="mx-auto">
-                  <ToastContainer
-                    position="top-right"
-                    autoClose={3000}
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                  />
-                  {children}
-                </main>
-              </ThemeProviders>
-            </NextIntlClientProvider>
-          </ReactQueryProvider>
+        <ReactQueryProvider>
+          <NextIntlClientProvider messages={messages}>
+            <ThemeProviders theme={theme}>
+              <main className="mx-auto min-h-screen max-w-4xl bg-white px-4 dark:bg-neutral-900">
+                <ToastContainer
+                  position="top-right"
+                  autoClose={3000}
+                  hideProgressBar={false}
+                  newestOnTop
+                  closeOnClick
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
+                {children}
+              </main>
+            </ThemeProviders>
+          </NextIntlClientProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

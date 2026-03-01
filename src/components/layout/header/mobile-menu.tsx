@@ -3,7 +3,6 @@
 import React from "react";
 import { Menu, type MenuProps } from "antd";
 import { InfoCircleOutlined, SettingOutlined, LogoutOutlined, WalletOutlined } from "@ant-design/icons";
-import { designTokens } from "@/utils/design-tokens";
 import { items, parentRoute, infoSub, portfolioSub } from "../sidenav/navigation.constant";
 
 interface MobileMenuProps {
@@ -119,7 +118,7 @@ export function MobileMenu({ isOpen, onClose, onNavigate, onLogout, mobileMenuRe
             onClose();
             onLogout();
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = designTokens.colors.errorBg)}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f5f5f5")}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
         >
           <LogoutOutlined className="!text-error mr-3 text-lg" />
