@@ -4,6 +4,7 @@ import { getNewsBySlug } from "@/service/cms-strapi/news";
 import { NewsSummary } from "@/service/cms-strapi/news/interface";
 import { Metadata } from "next";
 import Image from "next/image";
+import { draftMode } from "next/headers";
 import ReactMarkdown from "react-markdown";
 const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
 
@@ -13,7 +14,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
   const { slug, locale } = await params;
-  const res = await getNewsBySlug(slug, locale);
+  const { isEnabled: isDraftMode } = await draftMode();
+  const res = await getNewsBySlug(slug, locale, isDraftMode ? "draft" : undefined);
   const article = res.data?.length > 0 ? res.data[0] : null;
 
   const title = article?.titles ?? "News - My Website";
@@ -50,7 +52,8 @@ export async function generateMetadata({
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
   const { slug, locale } = await params;
-  const res = await getNewsBySlug(slug, locale);
+  const { isEnabled: isDraftMode } = await draftMode();
+  const res = await getNewsBySlug(slug, locale, isDraftMode ? "draft" : undefined);
   const news = res.data?.length > 0 ? res.data[0] : null;
 
   if (!news) {

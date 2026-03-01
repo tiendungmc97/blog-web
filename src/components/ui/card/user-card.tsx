@@ -143,7 +143,7 @@ export function UserCard({
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex hidden items-center gap-2 lg:flex">
         {twitterUrl && (
           <LinkSocialIcon url={twitterUrl}>
             <TwitterIcon />

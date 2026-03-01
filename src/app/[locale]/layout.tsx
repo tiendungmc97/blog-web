@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SessionStorageKeys } from "@/constants/keys";
 import { Language } from "@/libs/i18n/types";
+import LivePreview from "@/components/live-preview";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,6 +70,7 @@ export default async function LocaleLayout({
         <ReactQueryProvider>
           <NextIntlClientProvider messages={messages}>
             <ThemeProviders theme={theme}>
+              <LivePreview />
               <main className="mx-auto min-h-screen max-w-4xl bg-white px-4 dark:bg-neutral-900">
                 <ToastContainer
                   position="top-right"
