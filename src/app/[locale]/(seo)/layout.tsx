@@ -1,4 +1,5 @@
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const NAV_LINKS = [
@@ -9,16 +10,17 @@ const NAV_LINKS = [
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const t = useTranslations();
   return (
     <>
       <header className="sticky top-0 z-50 w-full bg-white backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900/80">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           {/* Logo */}
           <Link
-            href="/"
+            href="/news"
             className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white"
           >
-            Test Blog
+            {t("Home")}
           </Link>
 
           {/* Nav links */}

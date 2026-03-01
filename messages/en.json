@@ -1,1 +1,6 @@
-{}
+{
+  "Home": "Home",
+  "news": "News",
+  "newsDetail": "News Detail",
+  "newsNotFound": "News not found."
+}
