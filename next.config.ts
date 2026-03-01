@@ -1,7 +1,6 @@
+import { STRAPI_URL } from "@/constants/domain";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
-
-const strapiUrl = process.env.STRAPI_URL || "http://localhost:1337";
 
 const nextConfig: NextConfig = {
   output: "standalone",
@@ -25,7 +24,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: `frame-ancestors 'self' ${strapiUrl}`,
+            value: `frame-ancestors 'self' ${STRAPI_URL}`,
           },
         ],
       },

@@ -10,8 +10,7 @@ import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
 import "swiper/css/pagination";
-
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337";
+import { STRAPI_URL } from "@/constants/domain";
 
 interface RelatedContentProps {
   items: NewsSummary[];
@@ -53,7 +52,6 @@ export function RelatedContent({ items }: RelatedContentProps) {
   const swiperRef = useRef<SwiperType | null>(null);
 
   if (!items || items.length === 0) return null;
-
   return (
     <section className="mt-10">
       <div className="mb-4 flex items-center justify-between">
@@ -72,8 +70,8 @@ export function RelatedContent({ items }: RelatedContentProps) {
         autoplay={false}
         breakpoints={{
           0: { slidesPerView: 1, slidesPerGroup: 1 },
-          640: { slidesPerView: 4, slidesPerGroup: 4 },
-          1024: { slidesPerView: 4, slidesPerGroup: 4 },
+          640: { slidesPerView: 3, slidesPerGroup: 3 },
+          1024: { slidesPerView: 3, slidesPerGroup: 3 },
         }}
       >
         {items.map((item) => {
@@ -84,9 +82,9 @@ export function RelatedContent({ items }: RelatedContentProps) {
                 className="group flex flex-col overflow-hidden rounded-xs border bg-white shadow-sm transition hover:shadow-md"
               >
                 <div className="relative h-44 w-full bg-neutral-100 dark:bg-neutral-800">
-                  {item.url ? (
+                  {item.cover?.url ? (
                     <Image
-                      src={item.url ? `${STRAPI_URL}${item.url}` : "/placeholder.png"}
+                      src={item.cover?.url ? `${STRAPI_URL}${item.cover.url}` : "/placeholder.png"}
                       alt={item.titles ?? ""}
                       fill
                       className="object-cover transition duration-300 group-hover:scale-105"
@@ -95,11 +93,11 @@ export function RelatedContent({ items }: RelatedContentProps) {
                     <div className="flex h-full items-center justify-center text-sm text-neutral-400">No image</div>
                   )}
                 </div>
-                <div className="flex flex-col gap-1 p-4">
+                <div className="flex h-20 flex-col gap-1 p-3">
                   <p className="line-clamp-2 text-sm font-semibold text-neutral-900 dark:text-white">
                     {item.titles ?? "Untitled"}
                   </p>
-                  {item.descriptions && <p className="line-clamp-2 text-xs text-neutral-500">{item.descriptions}</p>}
+                  {item.descriptions && <p className="line-clamp-1 text-xs text-neutral-500">{item.descriptions}</p>}
                 </div>
               </Link>
             </SwiperSlide>

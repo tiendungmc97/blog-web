@@ -14,12 +14,9 @@ export interface New {
 
   contents: Content[];
 
-  relative_news: NewsSummary[];
-  news: NewsSummary | null;
-  relativee_news1: NewsSummary | null;
-  new: NewsSummary | null;
-  relative_news2: NewsSummary | null;
-  relative_news3: NewsSummary[];
+  news_related: NewsSummary[];
+
+  author: Author | null;
 
   localizations: NewsLocalization[];
 }
@@ -99,7 +96,22 @@ export interface NewsSummary {
   locale: string;
   titles: string | null;
   descriptions: string | null;
-  url: string | null;
+  cover: Media | null;
+}
+
+/* ============================= */
+/* Author */
+/* ============================= */
+
+export interface Author {
+  id: number;
+  documentId: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  avatar: Media | null;
 }
 
 /* ============================= */

@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { draftMode } from "next/headers";
 import ReactMarkdown from "react-markdown";
-const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
+import { STRAPI_URL } from "@/constants/domain";
 
 export async function generateMetadata({
   params,
@@ -67,14 +67,10 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
   const coverUrl = news.cover?.url ? `${STRAPI_URL}${news.cover.url}` : null;
 
   const relativedContents: NewsSummary[] =
-    Array(6)
-      .fill(news.relative_news3 ?? [])
-      .flat()
-      .map((item, index) => ({
-        ...item,
-        id: item.id * 1000 + index,
-        cover: null,
-      })) || [];
+    news.news_related.map((item, index) => ({
+      ...item,
+      id: item.id * 1000 + index,
+    })) || [];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -91,10 +87,10 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
         })}
       </p>
       <UserCard
-        name="Kevin Patra"
-        avatarUrl=""
-        avatarAlt="Author Avatar"
-        role="Senior News Write"
+        name={news.author?.name ?? "Unknown Author"}
+        avatarUrl={news.author?.avatar?.url ? `${STRAPI_URL}${news.author.avatar.url}` : undefined}
+        avatarAlt={news.author?.name ?? ""}
+        role={news.author?.email ?? ""}
         facebookUrl="fb"
         gmailUrl="gmail"
         twitterUrl="twitter"

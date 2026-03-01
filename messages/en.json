@@ -1,6 +1,8 @@
 {
   "Home": "Home",
   "news": "News",
+  "photos": "Photos",
+  "seeMore": "See more",
   "newsDetail": "News Detail",
   "newsNotFound": "News not found."
 }
