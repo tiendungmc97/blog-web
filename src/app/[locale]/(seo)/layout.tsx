@@ -1,6 +1,6 @@
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { Link } from "@/libs/i18n/navigation";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const t = useTranslations();
