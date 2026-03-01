@@ -1,12 +1,11 @@
 import { UserCard } from "@/components/ui/card/user-card";
 import { RelatedContent } from "@/components/ui/swiper/related-content";
-import { getNewsBySlug } from "@/service/cms-strapi/news";
-import { NewsSummary } from "@/service/cms-strapi/news/interface";
-import { Metadata } from "next";
-import Image from "next/image";
-import { draftMode } from "next/headers";
-import ReactMarkdown from "react-markdown";
 import { STRAPI_URL } from "@/constants/domain";
+import { getNewsBySlug } from "@/service/cms-strapi/news";
+import { Metadata } from "next";
+import { draftMode } from "next/headers";
+import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 
 export async function generateMetadata({
   params,
@@ -66,12 +65,6 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
 
   const coverUrl = news.cover?.url ? `${STRAPI_URL}${news.cover.url}` : null;
 
-  const relativedContents: NewsSummary[] =
-    news.news_related.map((item, index) => ({
-      ...item,
-      id: item.id * 1000 + index,
-    })) || [];
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-4 text-3xl font-bold">{news.titles}</h1>
@@ -112,7 +105,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
           <ReactMarkdown>{content.body}</ReactMarkdown>
         </div>
       ))}
-      <RelatedContent items={relativedContents} />
+      <RelatedContent items={news.news_related ?? []} />
     </div>
   );
 }
