@@ -1,5 +1,7 @@
 # 📌 BLOG SYSTEM DEMO (Web + Admin)
 
+Tập trung vào việc thiết lập cấu trúc code rõ ràng, dễ mở rộng và demo các chức năng chính của hệ thống.
+
 ## 1. Thông tin dự án
 
 ### 🔹 Web (Frontend – Next.js)
